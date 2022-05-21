@@ -242,7 +242,7 @@ router.get('/searchAns', async (ctx, next) => {
 
 router.get('/getCoreConfig', async (ctx, next) => {
   const yaml2json = require('../service/yamlService').yaml2json;
-  let filePath = path.resolve(process.cwd(), '../../../../../vine/vinejs-blog-core/vine.core.yml');
+  let filePath = path.resolve(process.cwd(), 'core/vine.core.yml');
   ctx.body = yaml2json(filePath);
 })
 
