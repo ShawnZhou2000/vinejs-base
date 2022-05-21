@@ -2,6 +2,8 @@ const router = require("koa-router")();
 
 const cmd = require("node-cmd");
 
+const path = require('path');
+
 router.prefix("/commands");
 
 function command(ctx, next, command) {
@@ -31,6 +33,15 @@ router.get("/debug", (ctx, next) => {
 });
 router.get("/publish", (ctx, next) => {
   command(ctx, next, "vine publish");
+});
+
+router.post('/create', (ctx, next) => {
+  let data = ctx.request.body.data;
+  let ans = cmd.runSync(`vine create ${data.projectName} '${data.workspace}' '${data.core}' '${data.deployer}'`);
+  console.log(ans);
+  ctx.body = {
+    workspace: path.resolve(data.workspace, data.projectName)
+  };
 });
 
 module.exports = router;
